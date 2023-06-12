@@ -12,7 +12,9 @@ class Beranda extends StatefulWidget {
 
 class _BerandaState extends State<Beranda> {
   File? image;
+  String? judul;
   String? description;
+  String? alamat;
 
 
 
@@ -55,11 +57,15 @@ class _BerandaState extends State<Beranda> {
 
           if (result != null) {
             final image = result['image'];
+            final judul = result['judul'];
             final description = result['description'];
+            final alamat = result['alamat'];
 
             setState(() {
               this.image = image;
+              this.judul = judul;
               this.description = description;
+              this.alamat = alamat;
             });
 
           }
@@ -96,15 +102,20 @@ class _BerandaState extends State<Beranda> {
           if (image != null)
             Image.file(
               image!,
-              width: 150,
+              width: MediaQuery.of(context).size.width,
               height: 150,
               fit: BoxFit.cover,
             ),
 
           SizedBox(height: 10),
-          Text(
-            description ?? 'belum ada laporan :D',
-            style: TextStyle(fontSize: 16,),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(left: 6),
+            child: Text(
+              description ?? 'belum ada laporan :D',
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 16),
+            ),
           ),
         ],
       ),

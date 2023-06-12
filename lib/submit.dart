@@ -14,6 +14,8 @@ class FormSubmissionPage extends StatefulWidget {
 class _FormSubmissionPageState extends State<FormSubmissionPage> {
   final picker = ImagePicker();
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _judulController = TextEditingController();
+  TextEditingController _alamatController = TextEditingController();
 
   Future<void> getImage() async {
 
@@ -52,15 +54,26 @@ class _FormSubmissionPageState extends State<FormSubmissionPage> {
             ),
             SizedBox(height: 20),
             TextField(
+              controller: _judulController,
+              decoration: InputDecoration(labelText: 'Judul'),
+            ),
+            TextField(
               controller: _descriptionController,
               decoration: InputDecoration(labelText: 'Deskripsi'),
+            ),
+            TextField(
+              controller: _alamatController,
+              decoration: InputDecoration(labelText: 'Alamat'),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context, {
                   'image': _image != null ? File(_image!.path) : null,
+                  'judul': _judulController.text,
                   'description': _descriptionController.text,
+                  'alamat': _alamatController.text,
+
                 });
                 _image = null;
               },
