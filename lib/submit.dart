@@ -36,50 +36,54 @@ class _FormSubmissionPageState extends State<FormSubmissionPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: getImage,
-              child: Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: getImage,
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: _image != null
+                        ? Image.file(_image!)
+                        : Icon(Icons.add_a_photo, color: Colors.grey),
+                  ),
                 ),
-                child: _image != null
-                    ? Image.file(_image!)
-                    : Icon(Icons.add_a_photo, color: Colors.grey),
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: _judulController,
-              decoration: InputDecoration(labelText: 'Judul'),
-            ),
-            TextField(
-              controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Deskripsi'),
-            ),
-            TextField(
-              controller: _alamatController,
-              decoration: InputDecoration(labelText: 'Alamat'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, {
-                  'image': _image != null ? File(_image!.path) : null,
-                  'judul': _judulController.text,
-                  'description': _descriptionController.text,
-                  'alamat': _alamatController.text,
+                SizedBox(height: 20),
+                TextField(
+                  controller: _judulController,
+                  decoration: InputDecoration(labelText: 'Judul'),
+                ),
+                TextField(
+                  controller: _descriptionController,
+                  decoration: InputDecoration(labelText: 'Deskripsi'),
+                ),
+                TextField(
+                  controller: _alamatController,
+                  decoration: InputDecoration(labelText: 'Alamat'),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context, {
+                      'image': _image != null ? File(_image!.path) : null,
+                      'judul': _judulController.text,
+                      'description': _descriptionController.text,
+                      'alamat': _alamatController.text,
 
-                });
-                _image = null;
-              },
-              child: Text('Submit'),
+                    });
+                    _image = null;
+                  },
+                  child: Text('Submit'),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
