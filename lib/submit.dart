@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-// import "package:path_provider/path_provider.dart";
-// import 'package:path/path.dart';
 
 File? _image;
 
@@ -13,6 +11,7 @@ class FormSubmissionPage extends StatefulWidget {
 
 class _FormSubmissionPageState extends State<FormSubmissionPage> {
   final picker = ImagePicker();
+  TextEditingController _namaController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _judulController = TextEditingController();
   TextEditingController _alamatController = TextEditingController();
@@ -56,6 +55,10 @@ class _FormSubmissionPageState extends State<FormSubmissionPage> {
                 ),
                 SizedBox(height: 20),
                 TextField(
+                  controller: _namaController,
+                  decoration: InputDecoration(labelText: 'Nama anda / biarkan anonymous'),
+                ),
+                TextField(
                   controller: _judulController,
                   decoration: InputDecoration(labelText: 'Judul'),
                 ),
@@ -72,6 +75,7 @@ class _FormSubmissionPageState extends State<FormSubmissionPage> {
                   onPressed: () {
                     Navigator.pop(context, {
                       'image': _image != null ? File(_image!.path) : null,
+                      'nama': _namaController.text,
                       'judul': _judulController.text,
                       'description': _descriptionController.text,
                       'alamat': _alamatController.text,

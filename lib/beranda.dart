@@ -1,8 +1,6 @@
-// import 'dart:html';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sourcecode/submit.dart';
-import 'other_file.dart';
 
 class Beranda extends StatefulWidget {
   const Beranda({Key? key}) : super(key: key);
@@ -13,9 +11,11 @@ class Beranda extends StatefulWidget {
 
 class _BerandaState extends State<Beranda> {
   File? image;
-  String? judul;
-  String? description;
-  String? alamat;
+  String? nama;
+
+  String judul = "";
+  String description = "";
+  String alamat = "";
 
   @override
   Widget build(BuildContext context) {
@@ -58,18 +58,19 @@ class _BerandaState extends State<Beranda> {
 
           if (result != null) {
             final image = result['image'];
+            final nama = result['nama'];
             final judul = result['judul'];
             final description = result['description'];
             final alamat = result['alamat'];
 
             setState(() {
               this.image = image;
+              this.nama = nama;
               this.judul = judul;
               this.description = description;
               this.alamat = alamat;
             });
 
-            OtherClass().useImage(image!);
           }
         },
         child: const Text(
@@ -99,7 +100,7 @@ class _BerandaState extends State<Beranda> {
           context: context,
           builder: (BuildContext context) {
             return Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               height: 900,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -111,13 +112,23 @@ class _BerandaState extends State<Beranda> {
                     height: 300,
                     fit: BoxFit.cover,
                   ),
-                  SizedBox(height: 5,),
-                  Text(judul ?? ''),
-                  SizedBox(height: 5,),
-                  Text(description ?? ''),
-                  SizedBox(height: 5,),
-                  Text(alamat ?? ''),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      const Text(" Dipost oleh : ", style: TextStyle(fontSize: 18)),
+                      Text(nama ?? "Hamba tuhan", style: const TextStyle(fontSize: 18)),
+                    ],
+                  ),
+                  const SizedBox(height: 7),
+                  const Text(" ------------------------------------------------- ", style: TextStyle(fontSize: 28)),
+                  Text(" Judul        :  " + judul, style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 5),
+                  Text(" Deskripsi :  " + description, style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 5),
+                  Text(" Alamat     :  " + alamat, style: const TextStyle(fontSize: 18)),
+                  const SizedBox(height: 20),
+                  const Text(" Status      :  Dalam proses penyanggahan", style: TextStyle(fontSize: 18)),
+                  const SizedBox(height: 15),
                   ElevatedButton(
                     child: const Text('Close'),
                     onPressed: () => Navigator.pop(context),
@@ -155,7 +166,7 @@ class _BerandaState extends State<Beranda> {
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.only(left: 6),
                     child: Text(
-                      judul ?? '',
+                      judul,
                       textAlign: TextAlign.start,
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
